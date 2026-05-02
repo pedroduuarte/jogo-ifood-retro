@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iFood Retro: A* vs Gulosa</title>
+    <!-- Fonte pixelada do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Mapa Principal -->
+        <main class="map-section">
+            <h1 class="game-title">iFood Delivery Simulator</h1>
+            <div class="canvas-wrapper">
+                <canvas id="gameCanvas" width="600" height="600"></canvas>
+            </div>
+            
+            <div class="legend">
+                <div class="legend-item"><span class="color-box" style="background: #2c3e50;"></span> Prédios (Obstáculo)</div>
+                <div class="legend-item"><span class="color-box" style="background: #bdc3c7;"></span> Rua Normal (Custo 1)</div>
+                <div class="legend-item"><span class="color-box" style="background: #3498db;"></span> Avenida (Custo 0.5)</div>
+                <div class="legend-item"><span class="color-box" style="background: #e67e22;"></span> Calçadão (Custo 3)</div>
+                <div class="legend-item"><span class="color-box" style="background: #e74c3c;"></span> Mão Única &rarr;</div>
+            </div>
+        </main>
+
+        <!-- Painel de Controle e Estatísticas -->
+        <aside class="ui-panel">
+            <div class="panel-section control-panel">
+                <h2>Controles</h2>
+                
+                <div class="form-group">
+                    <label>Algoritmo:</label>
+                    <select id="algorithmSelect">
+                        <option value="astar">Busca A* (Ótima)</option>
+                        <option value="greedy">Busca Gulosa (Rápida/Falha)</option>
+                    </select>
+                </div>
+
+
+
+                <div class="button-group">
+                    <button id="startBtn" class="btn primary">INICIAR BUSCA</button>
+                    <button id="resetBtn" class="btn secondary">LIMPAR MAPA</button>
+                    <button id="newMapBtn" class="btn action">GERAR NOVO MAPA</button>
+                </div>
+            </div>
+
+            <div class="panel-section stats-panel">
+                <h2>Estatísticas</h2>
+                <div class="stat-item">
+                    <span class="stat-label">Algoritmo Atual:</span>
+                    <span id="statAlgo" class="stat-value">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Custo Total:</span>
+                    <span id="statCost" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Nós Expandidos:</span>
+                    <span id="statNodes" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Status:</span>
+                    <span id="statStatus" class="stat-value waiting">Aguardando...</span>
+                </div>
+            </div>
+
+            <div class="panel-section help-panel">
+                <h2>Teoria</h2>
+                <p><strong>A*:</strong> Utiliza f(n) = g(n) + h(n). Considera o custo das ruas. Acha o caminho mais rápido/barato, preferindo Avenidas.</p>
+                <p><strong>Gulosa:</strong> Utiliza f(n) = h(n). Olha apenas para a distância reta ao cliente. Pode entrar em contra-mão ou rua sem saída.</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Scripts -->
+    <script src="src/js/map.js"></script>
+    <script src="src/js/algorithms.js"></script>
+    <script src="src/js/renderer.js"></script>
+    <script src="src/js/main.js"></script>
+</body>
+</html>

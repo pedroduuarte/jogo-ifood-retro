@@ -1,0 +1,247 @@
+:root {
+    --bg-color: #1a1a2e;
+    --panel-bg: #16213e;
+    --text-color: #e94560;
+    --text-light: #ffffff;
+    --border-color: #e94560;
+    
+    /* Map Colors */
+    --color-building: #2c3e50;
+    --color-road: #bdc3c7;
+    --color-avenue: #3498db;
+    --color-slow: #e67e22;
+    --color-oneway: #e74c3c;
+    --color-path: #f1c40f;
+    --color-visited: rgba(155, 89, 182, 0.5);
+    --color-frontier: rgba(46, 204, 113, 0.5);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive; /* Retro pixel font */
+    background-color: var(--bg-color);
+    color: var(--text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.5;
+}
+
+.game-container {
+    display: flex;
+    gap: 30px;
+    background: var(--panel-bg);
+    padding: 20px;
+    border: 4px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Map Section */
+.map-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.game-title {
+    color: var(--text-color);
+    text-shadow: 2px 2px 0 #0f3460;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.canvas-wrapper {
+    border: 4px solid var(--text-color);
+    background-color: #000;
+    padding: 4px;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+canvas {
+    display: block;
+    image-rendering: pixelated; /* Keeps drawing sharp */
+}
+
+/* Legend */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    font-size: 10px;
+    background: rgba(0,0,0,0.5);
+    padding: 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    width: 100%;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.color-box {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    border: 1px solid #fff;
+}
+
+/* UI Panel */
+.ui-panel {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.panel-section {
+    background: rgba(0,0,0,0.3);
+    border: 2px dashed var(--border-color);
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.panel-section h2 {
+    color: var(--text-color);
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+/* Controls */
+.form-group {
+    margin-bottom: 15px;
+    font-size: 10px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+select {
+    width: 100%;
+    font-family: inherit;
+    font-size: 10px;
+}
+
+select {
+    padding: 8px;
+    background: #0f3460;
+    color: #fff;
+    border: 2px solid var(--border-color);
+    outline: none;
+    cursor: pointer;
+}
+
+
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    font-family: inherit;
+    font-size: 10px;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn.primary {
+    background-color: var(--text-color);
+    color: #fff;
+    border-color: #fff;
+}
+.btn.primary:hover {
+    background-color: #c81e3a;
+}
+
+.btn.secondary {
+    background-color: #2c3e50;
+    color: #fff;
+    border-color: #fff;
+}
+.btn.secondary:hover {
+    background-color: #1a252f;
+}
+
+.btn.action {
+    background-color: #f39c12;
+    color: #000;
+    border-color: #000;
+}
+.btn.action:hover {
+    background-color: #e67e22;
+}
+
+/* Stats */
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    margin-bottom: 12px;
+    border-bottom: 1px dotted rgba(255,255,255,0.2);
+    padding-bottom: 5px;
+}
+
+.stat-value {
+    color: var(--text-color);
+}
+
+.stat-value.waiting { color: #f1c40f; }
+.stat-value.success { color: #2ecc71; }
+.stat-value.fail { color: #e74c3c; }
+
+/* Help Panel */
+.help-panel {
+    font-size: 8px;
+    line-height: 1.8;
+}
+
+.help-panel p {
+    margin-bottom: 10px;
+}
+
+.help-panel strong {
+    color: var(--text-color);
+}
+
+@media (max-width: 1000px) {
+    .game-container {
+        flex-direction: column;
+    }
+    .ui-panel {
+        width: 100%;
+    }
+}
