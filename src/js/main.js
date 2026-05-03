@@ -1,38 +1,38 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Configurações do Grid (30x30, canvas 600x600 -> 20px cada célula)
+    // configurações do grid (30x30, canvas 600x600 -> 20px cada célula)
     const COLS = 30;
     const ROWS = 30;
     const CANVAS_SIZE = 600;
     const CELL_SIZE = CANVAS_SIZE / COLS;
 
-    // Instâncias principais
+    // instâncias principais
     let gameMap = new GameMap(COLS, ROWS, CELL_SIZE);
     let renderer = new GameRenderer('gameCanvas', gameMap);
 
-    // Estado da animação
+    // estado da animação
     let animationId = null;
     let isAnimating = false;
     let currentResult = null;
     let visitedCount = 0;
     let pathCount = 0;
 
-    // Elementos da UI
+    // elementos da UI
     const algoSelect = document.getElementById('algorithmSelect');
 
     const startBtn = document.getElementById('startBtn');
     const resetBtn = document.getElementById('resetBtn');
     const newMapBtn = document.getElementById('newMapBtn');
     
-    // Elementos de Estatística
+    // elementos de Estatística
     const statAlgo = document.getElementById('statAlgo');
     const statCost = document.getElementById('statCost');
     const statNodes = document.getElementById('statNodes');
     const statStatus = document.getElementById('statStatus');
 
-    // Inicialização
+    // inicialização
     renderer.render();
 
-    // Controles
+    // controles
     startBtn.addEventListener('click', () => {
         if (isAnimating) return;
         
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function animate(currentTime = 0) {
         if (!isAnimating) return;
 
-        // Velocidade fixa da animação (rápida para boa visualização)
+        // velocidade fixa da animação (rápida para boa visualização)
         const delay = 1000 / 60;
 
         if (currentTime - lastTime < delay) {
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         lastTime = currentTime;
 
-        // Fase 1: Animar a exploração (nós visitados)
+        // animar a exploração (nós visitados)
         if (visitedCount < currentResult.visited.length) {
             visitedCount++;
             statNodes.textContent = visitedCount;
@@ -115,14 +115,14 @@ document.addEventListener('DOMContentLoaded', () => {
             
             animationId = requestAnimationFrame(animate);
         } 
-        // Fase 2: Animar a construção do caminho final
+        // fase 2: animar a construção do caminho final
         else if (pathCount < currentResult.path.length) {
             pathCount++;
             renderer.render(currentResult.visited, currentResult.path.slice(0, pathCount));
             
             animationId = requestAnimationFrame(animate);
         } 
-        // Fim da animação
+        // fim da animação
         else {
             isAnimating = false;
             

@@ -1,4 +1,4 @@
-// Fila de Prioridade Simples
+// fila de prioridade simples
 class PriorityQueue {
     constructor() {
         this.elements = [];
@@ -18,13 +18,13 @@ class PriorityQueue {
     }
 }
 
-// Heurística de Distância Euclidiana em Linha Reta
+// heurística de distância euclidiana em linha reta
 function heuristicEuclidean(a, b) {
     // Retorna a distância em linha reta, ignorando todos os obstáculos
     return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 }
 
-// Função para reconstruir o caminho a partir do dicionário "cameFrom"
+// função para reconstruir o caminho a partir do dicionário "cameFrom"
 function reconstructPath(cameFrom, current) {
     const path = [];
     let currStr = `${current.x},${current.y}`;
@@ -37,8 +37,8 @@ function reconstructPath(cameFrom, current) {
     return path.reverse();
 }
 
-// Algoritmo A* (A-Star)
-// Utiliza f(n) = g(n) + h(n), encontrando o caminho de menor custo
+// algoritmo A* (A-Star)
+// utiliza f(n) = g(n) + h(n), encontrando o caminho de menor custo
 function runAStar(gameMap) {
     const start = gameMap.start;
     const end = gameMap.end;
@@ -53,7 +53,7 @@ function runAStar(gameMap) {
     cameFrom[startStr] = null;
     costSoFar[startStr] = 0;
 
-    const visitedNodes = []; // Para animação
+    const visitedNodes = []; // para animação
 
     while (!frontier.isEmpty()) {
         const current = frontier.dequeue();
@@ -88,8 +88,8 @@ function runAStar(gameMap) {
     return { path: [], visited: visitedNodes, cost: 0, success: false };
 }
 
-// Algoritmo de Busca Gulosa (Greedy Best-First Search)
-// Utiliza apenas f(n) = h(n), ignorando o custo real percorrido
+// algoritmo de busca gulosa (greedy best-first search)
+// utiliza apenas f(n) = h(n), ignorando o custo real percorrido
 function runGreedy(gameMap) {
     const start = gameMap.start;
     const end = gameMap.end;
@@ -98,14 +98,14 @@ function runGreedy(gameMap) {
     frontier.enqueue(start, 0);
 
     const cameFrom = {};
-    const visited = {}; // Mantemos um registro simples de visitados para não entrar em loop infinito
+    const visited = {}; // mantemos um registro simples de visitados para não entrar em loop infinito
 
     const startStr = `${start.x},${start.y}`;
     cameFrom[startStr] = null;
     visited[startStr] = true;
 
-    const visitedNodes = []; // Para animação
-    let totalCost = 0; // Calcularemos apenas o custo final no caminho achado
+    const visitedNodes = []; 
+    let totalCost = 0; // calcular apenas o custo final no caminho achado
 
     while (!frontier.isEmpty()) {
         const current = frontier.dequeue();
@@ -113,7 +113,7 @@ function runGreedy(gameMap) {
 
         if (current.x === end.x && current.y === end.y) {
             const path = reconstructPath(cameFrom, current);
-            // Calcular o custo real do caminho (mesmo que o algoritmo tenha ignorado ao escolher)
+            // calcular o custo real do caminho (mesmo que o algoritmo tenha ignorado ao escolher)
             for (let i = 0; i < path.length - 1; i++) {
                 totalCost += gameMap.getCost(path[i], path[i + 1]);
             }
@@ -131,7 +131,7 @@ function runGreedy(gameMap) {
             if (!visited[nextStr]) {
                 visited[nextStr] = true;
 
-                // GULOSA f(n) = h(n) apenas (Distância em linha reta pro objetivo)
+                // GULOSA f(n) = h(n) apenas (distância em linha reta pro objetivo)
                 const priority = heuristicEuclidean(next, end);
 
                 frontier.enqueue(next, priority);

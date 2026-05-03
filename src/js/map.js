@@ -19,10 +19,10 @@ class GameMap {
     }
 
     generateMap() {
-        // Inicializa grade vazia (apenas ruas)
+        // inicializa grade vazia (apenas ruas)
         this.grid = Array(this.rows).fill(null).map(() => Array(this.cols).fill(CELL_TYPES.ROAD.value));
 
-        // Cria as bordas de prédios para conter o mapa
+        // cria as bordas de prédios para conter o mapa
         for (let i = 0; i < this.cols; i++) {
             this.grid[0][i] = CELL_TYPES.BUILDING.value;
             this.grid[this.rows - 1][i] = CELL_TYPES.BUILDING.value;
@@ -32,7 +32,7 @@ class GameMap {
             this.grid[j][this.cols - 1] = CELL_TYPES.BUILDING.value;
         }
 
-        // Gerar blocos de prédios aleatórios (4 a 7 blocos)
+        // gerar blocos de prédios aleatórios (4 a 7 blocos)
         const numBlocks = this._randInt(4, 7);
         for (let b = 0; b < numBlocks; b++) {
             const bw = this._randInt(3, 7);
@@ -47,7 +47,7 @@ class GameMap {
             }
         }
 
-        // Gerar avenidas horizontais aleatórias (2 a 3)
+        // gerar avenidas horizontais aleatórias (2 a 3)
         const numHAvenues = this._randInt(2, 3);
         const usedRows = new Set();
         for (let a = 0; a < numHAvenues; a++) {
@@ -70,7 +70,7 @@ class GameMap {
             }
         }
 
-        // Gerar avenidas verticais aleatórias (2 a 3)
+        // gerar avenidas verticais aleatórias (2 a 3)
         const numVAvenues = this._randInt(2, 3);
         const usedCols = new Set();
         for (let a = 0; a < numVAvenues; a++) {
@@ -92,7 +92,7 @@ class GameMap {
             }
         }
 
-        // Adicionar zonas lentas (calçadões) aleatórias (2 a 4 trechos)
+        // adicionar zonas lentas (calçadões) aleatórias (2 a 4 trechos)
         const numSlowZones = this._randInt(2, 4);
         for (let s = 0; s < numSlowZones; s++) {
             const isHorizontal = Math.random() > 0.5;
@@ -117,17 +117,17 @@ class GameMap {
             }
         }
 
-        // Posicionar início e fim em lados opostos do mapa
+        // posicionar início e fim em lados opostos do mapa
         this.start = this._findOpenCell(2, Math.floor(this.rows / 2), 'left');
         this.end = this._findOpenCell(this.cols - 3, Math.floor(this.rows / 2), 'right');
 
-        // Garantir que início e fim são acessíveis (limpar área ao redor)
+        // garantir que início e fim são acessíveis (limpar área ao redor)
         this._clearArea(this.start.x, this.start.y, 1);
         this._clearArea(this.end.x, this.end.y, 1);
 
-        // Verificar conectividade – se não há caminho, regenerar
+        // verificar conectividade – se não há caminho, regenerar
         if (!this._isReachable(this.start, this.end)) {
-            this.generateMap(); // Recursão até gerar um mapa válido
+            this.generateMap(); // recursão até gerar um mapa válido
         }
     }
 
@@ -136,7 +136,7 @@ class GameMap {
     }
 
     _findOpenCell(preferX, preferY, side) {
-        // Busca uma célula aberta perto da posição preferida
+        // busca uma célula aberta perto da posição preferida
         for (let r = 0; r < 10; r++) {
             const x = Math.max(1, Math.min(this.cols - 2, preferX + this._randInt(-r, r)));
             const y = Math.max(1, Math.min(this.rows - 2, preferY + this._randInt(-r, r)));
@@ -144,7 +144,7 @@ class GameMap {
                 return { x, y };
             }
         }
-        // Fallback: forçar posição
+        // fallback: forçar posição
         const fx = side === 'left' ? 2 : this.cols - 3;
         const fy = Math.floor(this.rows / 2);
         return { x: fx, y: fy };
@@ -201,8 +201,8 @@ class GameMap {
         const { x, y } = node;
         const currentTypeVal = this.grid[y][x];
 
-        // Regra de Mão Única:
-        // Se a célula atual é de mão única, o vizinho SÓ PODE SER NA DIREÇÃO ESPECÍFICA
+        // regra de Mão Única:
+        // se a célula atual é de mão única, o vizinho SÓ PODE SER NA DIREÇÃO ESPECÍFICA
         if (currentTypeVal === CELL_TYPES.ONE_WAY_RIGHT.value) {
             if (this.isValid(x + 1, y) && !this.isObstacle(x + 1, y)) {
                 neighbors.push({ x: x + 1, y: y });
@@ -216,12 +216,12 @@ class GameMap {
             return neighbors;
         }
 
-        // Movimento Ortogonal Padrão (Sem diagonais para simplificar a grade de ruas)
+        // movimento Ortogonal Padrão (Sem diagonais para simplificar a grade de ruas)
         const dirs = [
-            { dx: 0, dy: -1 }, // Cima
-            { dx: 1, dy: 0 },  // Direita
-            { dx: 0, dy: 1 },  // Baixo
-            { dx: -1, dy: 0 }  // Esquerda
+            { dx: 0, dy: -1 }, // cima
+            { dx: 1, dy: 0 },  // direita
+            { dx: 0, dy: 1 },  // baixo
+            { dx: -1, dy: 0 }  // esquerda
         ];
 
         for (let dir of dirs) {
@@ -244,6 +244,6 @@ class GameMap {
                 return CELL_TYPES[key].cost;
             }
         }
-        return 1; // Default
+        return 1; 
     }
 }

@@ -3,7 +3,7 @@ class GameRenderer {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext('2d');
         this.gameMap = gameMap;
-        this.cellSize = this.canvas.width / gameMap.cols; // Assegurar que seja quadrado
+        this.cellSize = this.canvas.width / gameMap.cols; // assegurar que seja quadrado
     }
 
     drawMap() {
@@ -17,7 +17,7 @@ class GameRenderer {
     }
 
     drawCell(x, y, typeValue) {
-        let color = '#000'; // Default
+        let color = '#000';
 
         switch (typeValue) {
             case CELL_TYPES.BUILDING.value: color = '#2c3e50'; break;
@@ -32,7 +32,7 @@ class GameRenderer {
         const py = y * this.cellSize;
         const s = this.cellSize;
 
-        // Preencher a cor base da célula
+        // preencher a cor base da célula
         this.ctx.fillStyle = color;
         this.ctx.fillRect(px, py, s, s);
 
@@ -44,7 +44,7 @@ class GameRenderer {
         this.ctx.fillRect(px, py + s - 2, s, 2);
         this.ctx.fillRect(px + s - 2, py, 2, s);
 
-        // Desenhar setas para mão única
+        // desenhar setas para mão única
         if (typeValue === CELL_TYPES.ONE_WAY_RIGHT.value) {
             this.drawArrow(x, y, 'right');
         } else if (typeValue === CELL_TYPES.ONE_WAY_DOWN.value) {
@@ -102,11 +102,11 @@ class GameRenderer {
         const start = this.gameMap.start;
         const end = this.gameMap.end;
 
-        // Desenhar Entregador
+        // desenhar entregador
         this.ctx.fillStyle = '#2ecc71';
         this.ctx.fillRect(start.x * this.cellSize + 2, start.y * this.cellSize + 2, this.cellSize - 4, this.cellSize - 4);
 
-        // Desenhar Cliente
+        // desenhar cliente
         this.ctx.fillStyle = '#e94560';
         this.ctx.beginPath();
         this.ctx.arc(
@@ -118,7 +118,7 @@ class GameRenderer {
         this.ctx.fill();
     }
 
-    // Desenha tudo na ordem correta
+    // desenha tudo na ordem correta
     render(visited = [], path = []) {
         this.drawMap();
         this.drawVisited(visited);

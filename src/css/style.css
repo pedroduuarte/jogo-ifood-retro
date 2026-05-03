@@ -5,7 +5,6 @@
     --text-light: #ffffff;
     --border-color: #e94560;
     
-    /* Map Colors */
     --color-building: #2c3e50;
     --color-road: #bdc3c7;
     --color-avenue: #3498db;
@@ -46,7 +45,6 @@ body {
     width: 100%;
 }
 
-/* Map Section */
 .map-section {
     flex: 1;
     display: flex;
@@ -76,7 +74,6 @@ canvas {
     image-rendering: pixelated; /* Keeps drawing sharp */
 }
 
-/* Legend */
 .legend {
     display: flex;
     flex-wrap: wrap;
@@ -103,7 +100,6 @@ canvas {
     border: 1px solid #fff;
 }
 
-/* UI Panel */
 .ui-panel {
     width: 350px;
     display: flex;
@@ -127,7 +123,6 @@ canvas {
     padding-bottom: 10px;
 }
 
-/* Controls */
 .form-group {
     margin-bottom: 15px;
     font-size: 10px;
@@ -153,8 +148,6 @@ select {
     outline: none;
     cursor: pointer;
 }
-
-
 
 .button-group {
     display: flex;
@@ -183,6 +176,7 @@ select {
     color: #fff;
     border-color: #fff;
 }
+
 .btn.primary:hover {
     background-color: #c81e3a;
 }
@@ -201,11 +195,11 @@ select {
     color: #000;
     border-color: #000;
 }
+
 .btn.action:hover {
     background-color: #e67e22;
 }
 
-/* Stats */
 .stat-item {
     display: flex;
     justify-content: space-between;
@@ -223,7 +217,6 @@ select {
 .stat-value.success { color: #2ecc71; }
 .stat-value.fail { color: #e74c3c; }
 
-/* Help Panel */
 .help-panel {
     font-size: 8px;
     line-height: 1.8;
