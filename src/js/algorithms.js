@@ -20,7 +20,7 @@ class PriorityQueue {
 
 // heurística de distância euclidiana em linha reta
 function heuristicEuclidean(a, b) {
-    // Retorna a distância em linha reta, ignorando todos os obstáculos
+    // retorna a distância em linha reta, ignorando todos os obstáculos
     return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 }
 
@@ -37,7 +37,7 @@ function reconstructPath(cameFrom, current) {
     return path.reverse();
 }
 
-// algoritmo A* (A-Star)
+// algoritmo A*
 // utiliza f(n) = g(n) + h(n), encontrando o caminho de menor custo
 function runAStar(gameMap) {
     const start = gameMap.start;
