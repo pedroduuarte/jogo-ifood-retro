@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="src/css/style.css">
 </head>
+
 <body>
     <div class="game-container">
         <main class="map-section">
@@ -14,25 +16,36 @@
             <div class="canvas-wrapper">
                 <canvas id="gameCanvas" width="600" height="600"></canvas>
             </div>
-            
+
             <div class="legend">
-                <div class="legend-item"><span class="color-box" style="background: #2c3e50;"></span> Prédios (Obstáculo)</div>
-                <div class="legend-item"><span class="color-box" style="background: #bdc3c7;"></span> Rua Normal (Custo 1)</div>
-                <div class="legend-item"><span class="color-box" style="background: #3498db;"></span> Avenida (Custo 0.5)</div>
-                <div class="legend-item"><span class="color-box" style="background: #e67e22;"></span> Calçadão (Custo 3)</div>
-                <div class="legend-item"><span class="color-box" style="background: #e74c3c;"></span> Mão Única &rarr;</div>
+                <div class="legend-item"><span class="color-box" style="background: #2c3e50;"></span> Prédios
+                    (Obstáculo)</div>
+                <div class="legend-item"><span class="color-box" style="background: #bdc3c7;"></span> Rua Normal (Custo
+                    1)</div>
+                <div class="legend-item"><span class="color-box" style="background: #3498db;"></span> Avenida (Custo
+                    0.5)</div>
+                <div class="legend-item"><span class="color-box" style="background: #e67e22;"></span> Calçadão (Custo 3)
+                </div>
+                <div class="legend-item"><span class="color-box" style="background: #e74c3c;"></span> Mão Única &rarr;
+                </div>
             </div>
         </main>
 
         <aside class="ui-panel">
             <div class="panel-section control-panel">
                 <h2>Controles</h2>
-                
+
                 <div class="form-group">
                     <label>Algoritmo:</label>
                     <select id="algorithmSelect">
-                        <option value="astar">Busca A* (Ótima)</option>
-                        <option value="greedy">Busca Gulosa (Rápida/Falha)</option>
+                        <optgroup label="─── Busca A* ───────────────">
+                            <option value="astar_euclidean">A* + Euclidiana (Forte)</option>
+                            <option value="astar_manhattan">A* + Manhattan (Fraca)</option>
+                        </optgroup>
+                        <optgroup label="─── Busca Gulosa ───────────">
+                            <option value="greedy_euclidean">Gulosa + Euclidiana (Forte)</option>
+                            <option value="greedy_manhattan">Gulosa + Manhattan (Fraca)</option>
+                        </optgroup>
                     </select>
                 </div>
 
@@ -67,8 +80,14 @@
 
             <div class="panel-section help-panel">
                 <h2>Teoria</h2>
-                <p><strong>A*:</strong> Utiliza f(n) = g(n) + h(n). Considera o custo das ruas. Acha o caminho mais rápido/barato, preferindo Avenidas.</p>
-                <p><strong>Gulosa:</strong> Utiliza f(n) = h(n). Olha apenas para a distância reta ao cliente. Pode entrar em contra-mão ou rua sem saída.</p>
+                <p><strong>A*:</strong> f(n) = g(n) + h(n). Equilibra custo real + estimativa. Garante o caminho de
+                    menor custo.</p>
+                <p><strong>Gulosa:</strong> f(n) = h(n). Só olha a estimativa, ignora o custo acumulado. Rápida, mas
+                    pode errar.</p>
+                <p><strong>Euclidiana (Forte):</strong> h = distância em linha reta. Subestima bastante em grades
+                    ortogonais.</p>
+                <p><strong>Manhattan (Fraca):</strong> h = |Δx| + |Δy|. Assume custo 1 por passo, ignora variações de
+                    custo das ruas.</p>
             </div>
         </aside>
     </div>
@@ -78,4 +97,5 @@
     <script src="src/js/renderer.js"></script>
     <script src="src/js/main.js"></script>
 </body>
+
 </html>

@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('startBtn');
     const resetBtn = document.getElementById('resetBtn');
     const newMapBtn = document.getElementById('newMapBtn');
-    
+
     // elementos de Estatística
     const statAlgo = document.getElementById('statAlgo');
     const statCost = document.getElementById('statCost');
@@ -35,18 +35,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // controles
     startBtn.addEventListener('click', () => {
         if (isAnimating) return;
-        
+
         resetMapState();
-        
-        const algo = algoSelect.value;
-        statAlgo.textContent = algo === 'astar' ? 'Busca A*' : 'Busca Gulosa';
+
+        const selected = algoSelect.value;
+
+        const isAStar = selected.startsWith('astar');
+        const heuristic = selected.endsWith('manhattan') ? heuristicManhattan : heuristicEuclidean;
+        const algoLabel = isAStar ? 'A*' : 'Gulosa';
+        const heurLabel = selected.endsWith('manhattan') ? 'Manhattan' : 'Euclidiana';
+
+        statAlgo.textContent = `${algoLabel} + ${heurLabel}`;
         statStatus.textContent = 'Buscando...';
         statStatus.className = 'stat-value waiting';
 
-        if (algo === 'astar') {
-            currentResult = runAStar(gameMap);
+        if (isAStar) {
+            currentResult = runAStar(gameMap, heuristic);
         } else {
-            currentResult = runGreedy(gameMap);
+            currentResult = runGreedy(gameMap, heuristic);
         }
 
         if (currentResult && currentResult.visited.length > 0) {
@@ -56,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             statStatus.className = 'stat-value fail';
         }
     });
+
 
     resetBtn.addEventListener('click', () => {
         resetMapState();
@@ -83,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentResult = null;
         visitedCount = 0;
         pathCount = 0;
-        
+
         statCost.textContent = '0';
         statNodes.textContent = '0';
     }
@@ -110,22 +117,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (visitedCount < currentResult.visited.length) {
             visitedCount++;
             statNodes.textContent = visitedCount;
-            
+
             renderer.render(currentResult.visited.slice(0, visitedCount), []);
-            
+
             animationId = requestAnimationFrame(animate);
-        } 
+        }
         // fase 2: animar a construção do caminho final
         else if (pathCount < currentResult.path.length) {
             pathCount++;
             renderer.render(currentResult.visited, currentResult.path.slice(0, pathCount));
-            
+
             animationId = requestAnimationFrame(animate);
-        } 
+        }
         // fim da animação
         else {
             isAnimating = false;
-            
+
             if (currentResult.success) {
                 statCost.textContent = currentResult.cost.toFixed(1);
                 statStatus.textContent = 'Concluído';
